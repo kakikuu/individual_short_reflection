@@ -1,0 +1,225 @@
+openapi: "3.0.3"
+
+info:
+  title: "ぐるぐる思考ストップアプリのAPI"
+  description: "このAPIでは、ぐるぐる思考を止めるためのアプリのデータの入出力の機能を提供します"
+  version: "1.0.0"
+servers:
+  - url: "http://localhost:8080"
+    description: "ローカルサーバー"
+    #TODO: デプロイ環境のURLを追記する
+paths:
+  /test:
+    get:
+      summary: "APIの接続テスト用エンドポイント"
+      description: "テストAPIです"
+      responses:
+        "200":
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "Hello, World!"
+        "400":
+          description: "リクエストが不正"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "Bad Request"
+        "500":
+          description: "サーバーエラー"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "Internal Server Error"
+  /reflection/{userid}:
+    get:
+      summary: "ユーザが入力した反省のタイトルの一覧を取得"
+      description: "userIdに対応するユーザが入力した反省のタイトルを取得します"
+      parameters:
+        - name: userid
+          in: path
+          description: "ユーザID"
+          schema:
+            type: "number"
+          required: true
+      responses:
+        "200":
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "Hello, World!"
+        "400":
+          description: "リクエストが不正"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "Bad Request"
+        "500":
+          description: "サーバーエラー"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "Internal Server Error"
+  /reflection/{userid}/{reflectionid}:
+    get:
+      summary: "ユーザが入力した反省の内容を個別に取得"
+      description: "userIdに対応するユーザが入力した反省の内容を個別に取得します"
+      parameters:
+        - name: userid
+          in: path
+          description: "ユーザID"
+          schema:
+            type: "string"
+          required: true
+        - name: reflectionid
+          in: path
+          description: "反省ID"
+          schema:
+            type: "number"
+          required: true
+      responses:
+        "200":
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "Hello, World!"
+        "400":
+          description: "リクエストが不正"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "Bad Request"
+        "500":
+          description: "サーバーエラー"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "Internal Server Error"
+    post:
+      summary: "反省をDBに保存するエンドポイント"
+      description: "userIdに対応するユーザが入力した反省の内容をDBに保存する"
+      parameters:
+        - name: userid
+          in: path
+          description: "ユーザID"
+          schema:
+            type: "string"
+          required: true
+        - name: reflectionid
+          in: path
+          description: "反省ID"
+          schema:
+            type: "number"
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                title:
+                  type: "string"
+                  example: "今日の反省"
+                whatMiss:
+                  type: "string"
+                  example: "何を失敗したのか"
+                whyMiss:
+                  type: "string"
+                  example: "なぜ失敗したのか"
+                blockMiss:
+                  type: "string"
+                  example: "どうすれば失敗を防げるか"
+              example:
+                title: "今日の反省"
+                whatMiss: "何を失敗したのか"
+                whyMiss: "なぜ失敗したのか"
+                blockMiss: "どうすれば失敗を防げるか"
+      responses:
+        "200":
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "Hello, World!"
+        "400":
+          description: "リクエストが不正"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "Bad Request"
+        "500":
+          description: "サーバーエラー"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "Internal Server Error"
+
+components:
+  schemas:
+    Reflection:
+      type: "object"
+      properties:
+        title:
+          type: "string"
+          example: "今日の反省"
+        whatMiss:
+          type: "string"
+          example: "何を失敗したのか"
+        whyMiss:
+          type: "string"
+          example: "なぜ失敗したのか"
+        blockMiss:
+          type: "string"
+          example: "どうすれば失敗を防げるか"
