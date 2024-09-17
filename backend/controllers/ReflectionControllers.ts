@@ -25,8 +25,9 @@ export const getReflectionController = (
 };
 
 export const createReflectionController = (req: Request, res: Response) => {
-  console.log("controllers", req);
-  const reflectionContent = req.body.data;
+  console.log("controllers", req.body);
+  const reflectionContent = req.body;
+
   if (req.body) {
     createReflection(reflectionContent)
       .then((result) => {

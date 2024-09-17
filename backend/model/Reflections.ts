@@ -36,7 +36,11 @@ export const createReflection = async (
   reflection: inputReflection
 ): Promise<getReflections[] | null> => {
   console.log("reflection", reflection);
-  const { data, error } = await supabase.from("memos").insert([reflection]);
+  const { data, error } = await supabase
+    .from("memos")
+    .insert([reflection])
+    .select();
+  console.log(data);
   if (error) {
     throw error;
   }
