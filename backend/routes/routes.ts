@@ -5,11 +5,14 @@ const app = express();
 
 const PORT = 3000;
 
-app.get("/:id", (req, res) => {
+app.get("/:user_id/:reflection_id", (req, res) => {
   console.log("get /が呼ばれました");
-  const reflectionId = req.params.id;
-  getReflectionController(res, reflectionId);
+  const userId = req.params.user_id;
+  const reflectionId = req.params.reflection_id;
+  getReflectionController(res, userId, reflectionId);
 });
+
+app.get("/:user_id/create_reflection/");
 
 app.listen(PORT, () => {
   console.log(`server listen Port ${PORT}`);
