@@ -15,6 +15,7 @@ const supabase = createClient(
 
 // getする関数
 export const getReflectionByReflectionId = async (
+  userId: string,
   reflectionId: string
 ): Promise<getReflections[] | null> => {
   console.log("モデルが呼ばれました");
@@ -30,12 +31,16 @@ export const getReflectionByReflectionId = async (
 };
 
 // insertする関数
+// 一つずつの反省をDBに挿入する関数
 export const createReflection = async (
   reflection: inputReflection
 ): Promise<getReflections[] | null> => {
+  console.log("reflection", reflection);
   const { data, error } = await supabase
-    .from("reflections")
-    .insert([reflection]);
+    .from("memos")
+    .insert([reflection])
+    .select();
+  console.log(data);
   if (error) {
     throw error;
   }

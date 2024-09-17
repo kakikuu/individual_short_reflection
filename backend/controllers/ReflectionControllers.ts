@@ -7,11 +7,12 @@ import {
 // 入力に対して、DBの結果を返す
 export const getReflectionController = (
   res: Response,
+  userId: string,
   reflectionId: string
 ) => {
   console.log("Controllerが呼ばれました");
   if (reflectionId) {
-    getReflectionByReflectionId(reflectionId as string)
+    getReflectionByReflectionId(userId as string, reflectionId as string)
       .then((result) => {
         res.send(result);
       })
@@ -24,8 +25,11 @@ export const getReflectionController = (
 };
 
 export const createReflectionController = (req: Request, res: Response) => {
+  console.log("controllers", req.body);
+  const reflectionContent = req.body;
+
   if (req.body) {
-    createReflection(req.body.data)
+    createReflection(reflectionContent)
       .then((result) => {
         res.send(result);
       })
