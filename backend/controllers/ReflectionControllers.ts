@@ -28,7 +28,7 @@ export const createReflectionController = (req: Request, res: Response) => {
   console.log("controllers", req.body);
   const reflectionContent = req.body;
 
-  if (req.body) {
+  if (reflectionContent) {
     createReflection(reflectionContent)
       .then((result) => {
         res.send(result);

@@ -3,7 +3,10 @@ import {
   getReflectionController,
   createReflectionController,
 } from "../controllers/ReflectionControllers";
-import { postUserController } from "../controllers/UserControllers";
+import {
+  signupController,
+  loginController,
+} from "../controllers/UserControllers";
 
 const app = express();
 const PORT = 3000;
@@ -15,10 +18,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // routerではパスから受け取るだけ
+app.post("/login", (req, res) => {
+  console.log("loginが呼ばれました");
+  loginController(req, res);
+});
 
 app.post("/signup", (req, res) => {
   console.log("signupが呼ばれました");
-  postUserController(req, res);
+  signupController(req, res);
 });
 
 // TODO:userIdの渡し方がjsonかクエリパラメータかは統一するべきかを検討する
