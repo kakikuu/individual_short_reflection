@@ -13,7 +13,21 @@ const supabase = createClient(
   process.env.SUPABASE_ANON_KEY
 );
 
-// getする関数
+export const getAllReflection = async (
+  userId: string
+): Promise<string[] | null> => {
+  const { data, error } = await supabase
+    .from("memos")
+    .select("title")
+    .eq("user_id", userId)
+    .select();
+
+  if (error) {
+    throw error;
+  }
+  return data;
+};
+
 export const getReflectionByReflectionId = async (
   userId: string,
   reflectionId: string

@@ -2,9 +2,23 @@ import { Request, Response } from "express";
 import {
   getReflectionByReflectionId,
   createReflection,
+  getAllReflection,
 } from "../model/Reflections";
 
 // 入力に対して、DBの結果を返す
+export const getAllReflectionsController = (res: Response, userId: string) => {
+  console.log("reflectionsのController");
+  if (userId) {
+    getAllReflection(userId as string)
+      .then((result) => {
+        res.send(result);
+      })
+      .catch((error) => {
+        res.send(error);
+      });
+  }
+};
+
 export const getReflectionController = (
   res: Response,
   userId: string,
