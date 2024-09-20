@@ -29,14 +29,15 @@ app.post("/signup", (req, res) => {
 });
 
 // TODO:userIdの渡し方がjsonかクエリパラメータかは統一するべきかを検討する
-app.get("/:user_id/:reflection_id", (req, res) => {
+app.get("/:user_id/reflection/:reflection_id", (req, res) => {
+  // 各反省を一つずつ取得する
   console.log("get /が呼ばれました");
   const userId = req.params.user_id;
   const reflectionId = req.params.reflection_id;
   getReflectionController(res, userId, reflectionId);
 });
 
-app.post("/create_reflection/", (req, res) => {
+app.post("/:user_id/reflection/:reflection_id/", (req, res) => {
   // userIdはbodyの中で送られてくるからパスでは受け取らない
   console.log("postが呼ばれました");
   console.log("routeのbody", req.body);
