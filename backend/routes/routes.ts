@@ -2,6 +2,7 @@ import express from "express";
 import {
   getReflectionController,
   createReflectionController,
+  getAllReflectionsController,
 } from "../controllers/ReflectionControllers";
 import {
   signupController,
@@ -26,6 +27,12 @@ app.post("/login", (req, res) => {
 app.post("/signup", (req, res) => {
   console.log("signupが呼ばれました");
   signupController(req, res);
+});
+
+app.get("/:user_id/reflection", (req, res) => {
+  const userId = req.params.user_id;
+  getAllReflectionsController(res, userId);
+  console.log("all reflectionのgetが呼ばれました");
 });
 
 // TODO:userIdの渡し方がjsonかクエリパラメータかは統一するべきかを検討する
