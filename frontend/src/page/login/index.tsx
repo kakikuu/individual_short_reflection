@@ -28,6 +28,11 @@ export const LoginPage = () => {
       });
 
       const result = await response.json();
+      if (result) {
+        console.log("ログイン成功");
+      } else {
+        console.log("サインアップしてください");
+      }
       console.log("レスポンス:", result);
     } catch (error) {
       console.error("エラー:", error);
