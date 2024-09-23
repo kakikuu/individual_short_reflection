@@ -11,28 +11,27 @@ export const LoginPage = () => {
     setPassword(e.target.value);
   };
 
-  //   どこでsetするか問題
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     console.log("投稿しました");
 
-    // TODO: Tanstackqueryを使用する
-    fetch("http://localhost:3000/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      }),
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error);
+    try {
+      const response = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_name: username, // フィールド名をバックエンドに合わせる
+          password: password,
+        }),
       });
+
+      const result = await response.json();
+      console.log("レスポンス:", result);
+    } catch (error) {
+      console.error("エラー:", error);
+    }
   };
   return (
     <>
