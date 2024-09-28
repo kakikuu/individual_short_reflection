@@ -1,7 +1,7 @@
 import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import logo from "./logo.svg";
-import { LoginPage } from "./page/login";
+import { LoginPage } from "./app/page/login";
+import { HomePage } from "./app/page/home";
 import "./App.css";
 
 function App() {
@@ -9,12 +9,10 @@ function App() {
     {
       path: "/",
       element: <LoginPage />,
-      // children: [
-      //   {
-      //     index: true,
-      //     element: <Top />,
-      //   },
-      // ],
+    },
+    {
+      path: "/home",
+      element: <HomePage />,
     },
   ]);
   return <RouterProvider router={router} />;
