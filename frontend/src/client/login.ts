@@ -1,6 +1,6 @@
 type LoginData = {
   username: string;
-  password: string;
+  password: number;
 };
 // ログインするときの関数を定義
 export const fetchUserData = async (loginData: LoginData) => {
@@ -15,10 +15,25 @@ export const fetchUserData = async (loginData: LoginData) => {
         password: loginData.password,
       }),
     });
+    // バックエンド側でなんのエラーが起こったかを判別する場所は1つだけにする
+    if (!response.ok) {
+      const errorData = await response.text();
+      return {
+        success: false,
+        message: errorData,
+      };
+    }
 
     const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error("エラー:", error);
+    return {
+      success: true,
+      data: result,
+    };
+  } catch (error: any) {
+    // fetchのcatchはネットワークエラーの場合にしか呼ばれない
+    return {
+      success: false,
+      message: error.message || "ネットワークエラーです",
+    };
   }
 };

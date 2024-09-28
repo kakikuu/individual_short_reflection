@@ -4,7 +4,8 @@ import { fetchUserData } from "../../../client/login";
 
 export const LoginPage = () => {
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState(0);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
 
@@ -18,16 +19,21 @@ export const LoginPage = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("投稿しました");
+    setErrorMessage("");
+
     const result = await fetchUserData({ username, password });
-    if (result) {
+    if (result.success) {
       navigate("/home");
+    } else {
+      setErrorMessage(result.message);
     }
   };
   return (
     <>
       <h1>ログイン</h1>
+      {errorMessage && <p>パスワードが違うかユーザ名が違います</p>}
       <form action="">
+        {}
         <input type="text" placeholder="username" onChange={changeUsername} />
         <input
           type="password"
