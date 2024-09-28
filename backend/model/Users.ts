@@ -37,7 +37,7 @@ export const Login = async (userData: inputUser): Promise<getUser | null> => {
     .eq("password", userData.password)
     .single();
   console.log(data);
-  if (!data) {
+  if (!data || Object.keys(data).length === 0) {
     return null;
   }
   if (error) {
