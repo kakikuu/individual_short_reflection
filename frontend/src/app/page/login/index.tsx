@@ -1,7 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { fetchUserData } from "../../../client/login";
+
 export const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
 
   const changeUsername = (e: any) => {
     setUsername(e.target.value);
@@ -14,28 +19,9 @@ export const LoginPage = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     console.log("投稿しました");
-
-    try {
-      const response = await fetch("http://localhost:3000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_name: username, // フィールド名をバックエンドに合わせる
-          password: password,
-        }),
-      });
-
-      const result = await response.json();
-      if (result) {
-        console.log("ログイン成功");
-      } else {
-        console.log("サインアップしてください");
-      }
-      console.log("レスポンス:", result);
-    } catch (error) {
-      console.error("エラー:", error);
+    const result = await fetchUserData({ username, password });
+    if (result) {
+      navigate("/home");
     }
   };
   return (
