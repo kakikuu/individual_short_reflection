@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import e, { Request, Response } from "express";
 import { Signup, Login } from "../model/Users";
 
 export const signupController = async (
@@ -12,16 +12,15 @@ export const signupController = async (
   if (userData) {
     await Signup(userData)
       .then((result) => {
-        if (result !== null) {
+        if (result.existingUser) {
           res.status(401).send("ユーザー名がすでに存在しています");
-          console.log("ユーザー名がすでに存在しています");
           return;
+        } else {
+          res.status(201).send(result.data);
         }
-        res.send(result);
       })
       .catch((error) => {
-        console.log("error: ", error);
-        res.send(error);
+        res.status(500).send(error);
       });
   } else {
     res.send("userDataがありません");
