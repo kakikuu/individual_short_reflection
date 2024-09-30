@@ -15,16 +15,30 @@ const supabase = createClient(
 
 // getする関数
 export const Signup = async (userData: inputUser): Promise<getUser | null> => {
-  console.log("Userのモデルが呼ばれました");
-  //   TODO: user_nameはユニークにするので、userテーブルに同じuser_nameがないかを確認する処理をいれる
-  const { data, error } = await supabase
+  // data: existingUserはエイリアスの書き方
+  const { data: existingUser, error: checkError } = await supabase
+    .from("users")
+    .select("*")
+    .eq("user_name", userData.user_name);
+
+  if (checkError) {
+    // クエリエラーの確認
+    throw checkError;
+  }
+
+  if (existingUser) {
+    return null;
+  }
+
+  const { data: newUser, error: insertError } = await supabase
     .from("users")
     .insert(userData)
     .single();
-  if (error) {
-    throw error;
+
+  if (insertError) {
+    throw insertError;
   }
-  return data ? (data as getUser) : null;
+  return newUser ? (newUser as getUser) : null;
 };
 
 export const Login = async (userData: inputUser): Promise<getUser | null> => {
