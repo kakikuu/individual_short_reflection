@@ -8,3 +8,8 @@ export interface inputUser {
   user_name: string;
   password: string;
 }
+
+export interface checkUserName {
+  existingUser: boolean;
+  data: getUser | null;
+}
