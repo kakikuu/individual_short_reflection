@@ -11,6 +11,10 @@ export const signupController = async (
   if (userData) {
     await Signup(userData)
       .then((result) => {
+        if (!result) {
+          res.status(401).send("ユーザー名がすでに存在しています");
+          return;
+        }
         res.send(result);
       })
       .catch((error) => {
@@ -29,7 +33,6 @@ export const loginController = async (
   if (userData) {
     await Login(userData)
       .then((result) => {
-        console.log("hogehoghoge");
         if (!result) {
           res.status(401).send("ユーザー名またはパスワードが間違っています");
           return;
@@ -37,7 +40,6 @@ export const loginController = async (
         res.send(result);
       })
       .catch((error) => {
-        console.log("aaaaaaa");
         res.send(error);
       });
   } else {
