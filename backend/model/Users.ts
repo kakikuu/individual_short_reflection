@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import type { getUser, inputUser } from "../types/user";
+import type { getUser, inputUser, checkUserName } from "../types/user";
 import donev from "dotenv";
 
 donev.config();
@@ -14,31 +14,44 @@ const supabase = createClient(
 );
 
 // getする関数
-export const Signup = async (userData: inputUser): Promise<getUser | null> => {
+export const Signup = async (
+  userData: inputUser
+): Promise<checkUserName | null> => {
   // data: existingUserはエイリアスの書き方
   const { data: existingUser, error: checkError } = await supabase
     .from("users")
     .select("*")
-    .eq("user_name", userData.user_name);
+    .eq("user_name", userData.user_name)
+    .maybeSingle();
+  // singleを使うと、0行が返ってきたときにエラーになるから0行の場合でも対応できるようにmarbeSingleを使う
+
+  console.log("exist user: ", existingUser);
 
   if (checkError) {
     // クエリエラーの確認
     throw checkError;
   }
 
-  if (existingUser) {
-    return null;
+  if (existingUser !== null) {
+    return {
+      existingUser: true,
+      data: existingUser,
+    };
   }
 
   const { data: newUser, error: insertError } = await supabase
     .from("users")
     .insert(userData)
-    .single();
+    .select("*");
 
   if (insertError) {
+    console.log("insertError");
     throw insertError;
   }
-  return newUser ? (newUser as getUser) : null;
+  return {
+    existingUser: false,
+    data: newUser ? (newUser[0] as getUser) : null,
+  };
 };
 
 export const Login = async (userData: inputUser): Promise<getUser | null> => {
