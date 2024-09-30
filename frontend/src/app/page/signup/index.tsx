@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { insertUserData } from "../../../client/signup";
 
-export const LoginPage = () => {
+export const SignupPage = () => {
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState(0);
+  const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export const LoginPage = () => {
     e.preventDefault();
     setErrorMessage("");
     // ここの関数を登録する関数に変える
-    const result = await fetchUserData({ username, password });
+    const result = await insertUserData({ username, password });
     if (result.success) {
       navigate("/home");
     } else {
