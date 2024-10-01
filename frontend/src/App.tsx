@@ -4,6 +4,7 @@ import { LoginPage } from "./app/page/login";
 import { SignupPage } from "./app/page/signup";
 import { HomePage } from "./app/page/home";
 import "./App.css";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   const router = createBrowserRouter([
@@ -20,7 +21,11 @@ function App() {
       element: <HomePage />,
     },
   ]);
-  return <RouterProvider router={router} />;
+  return (
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  );
 }
 
 export default App;
