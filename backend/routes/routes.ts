@@ -41,9 +41,8 @@ app.post("/signup", (req, res) => {
   signupController(req, res);
 });
 
-app.get("/:user_id/reflection", (req, res) => {
-  const userId = req.params.user_id;
-  getAllReflectionsController(res, userId);
+app.get("/reflection", (req, res) => {
+  getAllReflectionsController(req, res);
   console.log("all reflectionのgetが呼ばれました");
 });
 
