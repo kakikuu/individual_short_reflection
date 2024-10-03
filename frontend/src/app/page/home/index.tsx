@@ -37,15 +37,10 @@ export const HomePage = () => {
     fetchTitles(userId);
   }, [userId]);
 
-  useEffect(() => {
-    console.log("reflections", reflections);
-  }, [reflections]);
-
   if (loading) {
     return <div>ローディング中</div>;
   }
   if (error) {
-    console.log("reflections", reflections);
     return <div>{error}</div>;
   }
 
