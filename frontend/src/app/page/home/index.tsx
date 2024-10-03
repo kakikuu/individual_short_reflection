@@ -15,7 +15,6 @@ export const HomePage = () => {
     if (!userId) {
       throw new Error("ユーザーIDが存在しません");
     }
-
     const fetchTitles = async () => {
       try {
         const result = await fetchReflectionTitle(userId);
@@ -23,7 +22,7 @@ export const HomePage = () => {
       } catch (err) {
         setError("データの取得に失敗しました");
       } finally {
-        setLoading(false); // ローディング終了
+        setLoading(false);
       }
     };
 
@@ -37,9 +36,9 @@ export const HomePage = () => {
     return <div>{error}</div>;
   }
 
-  // if (reflectionTitles.length === 0) {
-  //   return <div>反省がありません</div>;
-  // }
+  if (reflectionTitles.length === 0) {
+    return <div>反省がありません</div>;
+  }
 
   return (
     <div>
