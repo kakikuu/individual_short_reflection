@@ -1,7 +1,7 @@
 export const fetchReflectionTitle = async (userId: string) => {
   try {
     const response = await fetch(`http://localhost:3000/reflection`, {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -18,6 +18,7 @@ export const fetchReflectionTitle = async (userId: string) => {
     }
 
     const result = await response.json();
+    console.log("result", result);
     return {
       success: true,
       data: result,

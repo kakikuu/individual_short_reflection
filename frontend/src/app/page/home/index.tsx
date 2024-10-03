@@ -5,39 +5,48 @@ import { useAuth } from "../../../context/AuthContext";
 import { fetchReflectionTitle } from "../../../client/reflection";
 import { useState, useEffect } from "react";
 
+interface Reflection {
+  title: string;
+  whatMiss: string;
+  whyMiss: string;
+  preventMiss: string;
+  createdAt: string;
+}
+
 export const HomePage = () => {
   const { userId } = useAuth();
-  const [reflectionTitles, setReflectionTitles] = useState<string[]>([]);
+  console.log("userId", userId);
+  const [reflections, setReflections] = useState<Reflection[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!userId) {
-      throw new Error("ユーザーIDが存在しません");
+  const fetchTitles = async (userId: string) => {
+    try {
+      const result = await fetchReflectionTitle(userId);
+      console.log("result3", result?.data);
+      setReflections(result?.data || []);
+    } catch (err) {
+      setError("データの取得に失敗しました");
+    } finally {
+      setLoading(false);
     }
-    const fetchTitles = async () => {
-      try {
-        const result = await fetchReflectionTitle(userId);
-        setReflectionTitles(result?.data || []); // データをstateに保存
-      } catch (err) {
-        setError("データの取得に失敗しました");
-      } finally {
-        setLoading(false);
-      }
-    };
+  };
 
-    fetchTitles();
+  useEffect(() => {
+    if (!userId) return;
+    fetchTitles(userId);
   }, [userId]);
+
+  useEffect(() => {
+    console.log("reflections", reflections);
+  }, [reflections]);
 
   if (loading) {
     return <div>ローディング中</div>;
   }
   if (error) {
+    console.log("reflections", reflections);
     return <div>{error}</div>;
-  }
-
-  if (reflectionTitles.length === 0) {
-    return <div>反省がありません</div>;
   }
 
   return (
@@ -45,9 +54,13 @@ export const HomePage = () => {
       <h1>ホームページ</h1>
       <h2>反省タイトル</h2>
       <ul>
-        {reflectionTitles.map((title, index) => (
-          <li key={index}>{title}</li>
-        ))}
+        {reflections.length > 0 ? (
+          reflections.map((reflection, index) => (
+            <li key={index}>{reflection.title}</li>
+          ))
+        ) : (
+          <li>反省タイトルがありません</li>
+        )}
       </ul>
     </div>
   );

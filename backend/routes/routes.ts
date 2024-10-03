@@ -24,6 +24,8 @@ app.use(
   })
 );
 
+app.options("*", cors());
+
 // JSON形式のリクエストボディをパースするためのミドルウェア
 app.use(express.json());
 
@@ -41,9 +43,9 @@ app.post("/signup", (req, res) => {
   signupController(req, res);
 });
 
-app.get("/reflection", (req, res) => {
-  getAllReflectionsController(req, res);
+app.post("/reflection", (req, res) => {
   console.log("all reflectionのgetが呼ばれました");
+  getAllReflectionsController(req, res);
 });
 
 // TODO:userIdの渡し方がjsonかクエリパラメータかは統一するべきかを検討する

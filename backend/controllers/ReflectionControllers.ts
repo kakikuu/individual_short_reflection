@@ -9,6 +9,7 @@ import {
 export const getAllReflectionsController = (req: Request, res: Response) => {
   console.log("reflectionsのController");
   const userId = req.body.user_id;
+  console.log("userId", userId);
   if (userId) {
     getAllReflection(userId as string)
       .then((result) => {
