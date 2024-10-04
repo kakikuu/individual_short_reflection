@@ -47,6 +47,7 @@ export const HomePage = () => {
             <li key={index}>{reflection.title}</li>
           ))
         ) : (
+          // ログインやサインアップとは違って、反省がないということはエラーではなくて、事実だから、BE側でエラーを返すよりはFEで処理するほうが良いと考えた
           <li>反省タイトルがありません</li>
         )}
       </ul>

@@ -21,9 +21,11 @@ export const getAllReflection = async (
     .select("title")
     .eq("user_id", userId)
     .select();
-
   if (error) {
     throw error;
+  }
+  if (data === null) {
+    return [];
   }
   return data;
 };

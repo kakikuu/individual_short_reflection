@@ -4,5 +4,5 @@ export interface Reflection {
   whatMiss: string;
   whyMiss: string;
   preventMiss: string;
-  createdAt: string;
+  createdAt: string | null;
 }
