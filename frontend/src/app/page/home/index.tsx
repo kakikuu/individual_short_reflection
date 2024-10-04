@@ -4,14 +4,7 @@
 import { useAuth } from "../../../context/AuthContext";
 import { fetchReflectionContents } from "../../../client/reflection";
 import { useState, useEffect } from "react";
-
-interface Reflection {
-  title: string;
-  whatMiss: string;
-  whyMiss: string;
-  preventMiss: string;
-  createdAt: string;
-}
+import type { Reflection } from "../../../types/reflection";
 
 export const HomePage = () => {
   const { userId } = useAuth();
