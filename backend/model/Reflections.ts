@@ -44,8 +44,6 @@ export const getReflectionByReflectionId = async (
   return data;
 };
 
-// insertする関数
-// 一つずつの反省をDBに挿入する関数
 export const createReflection = async (
   reflection: inputReflection
 ): Promise<getReflections[] | null> => {

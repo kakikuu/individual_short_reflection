@@ -57,8 +57,7 @@ app.get("/:user_id/reflection/:reflection_id", (req, res) => {
   getReflectionController(res, userId, reflectionId);
 });
 
-app.post("/:user_id/reflection/:reflection_id/", (req, res) => {
-  // userIdはbodyの中で送られてくるからパスでは受け取らない
+app.post("/reflection/create", (req, res) => {
   console.log("postが呼ばれました");
   console.log("routeのbody", req.body);
   createReflectionController(req, res);
