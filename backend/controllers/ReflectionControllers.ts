@@ -6,11 +6,14 @@ import {
 } from "../model/Reflections";
 
 // 入力に対して、DBの結果を返す
-export const getAllReflectionsController = (res: Response, userId: string) => {
+export const getAllReflectionsController = (req: Request, res: Response) => {
   console.log("reflectionsのController");
+  const userId = req.body.user_id;
+  console.log("userId", userId);
   if (userId) {
     getAllReflection(userId as string)
       .then((result) => {
+        console.log("result", result);
         res.send(result);
       })
       .catch((error) => {
