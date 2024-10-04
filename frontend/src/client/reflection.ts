@@ -1,4 +1,4 @@
-export const fetchReflectionTitle = async (userId: string) => {
+export const fetchReflectionContents = async (userId: string) => {
   try {
     const response = await fetch(`http://localhost:3000/reflection`, {
       method: "POST",
@@ -30,3 +30,5 @@ export const fetchReflectionTitle = async (userId: string) => {
     };
   }
 };
+
+// export const createReflection

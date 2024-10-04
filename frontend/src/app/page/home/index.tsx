@@ -2,7 +2,7 @@
 // ルーティングがhomeだけだと、URLを入力しただけでこのページにアクセスできてしまう
 // 内容を見られたくないから、ログインしているかしていないかの情報を内部で管理したい
 import { useAuth } from "../../../context/AuthContext";
-import { fetchReflectionTitle } from "../../../client/reflection";
+import { fetchReflectionContents } from "../../../client/reflection";
 import { useState, useEffect } from "react";
 
 interface Reflection {
@@ -22,7 +22,7 @@ export const HomePage = () => {
 
   const fetchTitles = async (userId: string) => {
     try {
-      const result = await fetchReflectionTitle(userId);
+      const result = await fetchReflectionContents(userId);
       console.log("result3", result?.data);
       setReflections(result?.data || []);
     } catch (err) {
