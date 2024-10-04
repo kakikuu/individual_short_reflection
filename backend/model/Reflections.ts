@@ -37,7 +37,7 @@ export const getReflectionByReflectionId = async (
     .from("memos")
     .select("*")
     .eq("id", reflectionId)
-    .eq("user_id", "ef09b2be-829d-4131-b12a-c9df75955da7");
+    .eq("user_id", userId);
   if (error) {
     throw error;
   }
