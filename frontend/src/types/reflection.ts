@@ -1,8 +1,9 @@
 export interface Reflection {
-  id: string | null;
+  id: string | undefined;
+  userId: string | null;
   title: string;
   whatMiss: string;
   whyMiss: string;
   preventMiss: string;
-  createdAt: string | null;
+  createdAt: string | undefined;
 }

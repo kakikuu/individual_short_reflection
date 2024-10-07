@@ -52,9 +52,9 @@ export const createReflection = async (
   console.log("reflection", reflection);
   const { data, error } = await supabase
     .from("memos")
-    .insert([reflection])
-    .select();
-  console.log(data);
+    .insert(reflection)
+    .select("*");
+  console.log(data, "data");
   if (error) {
     throw error;
   }

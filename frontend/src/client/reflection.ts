@@ -44,6 +44,7 @@ export const createReflection = async (contents: Reflection) => {
     });
     if (!response.ok) {
       const errorData = await response.text();
+      console.log("errorData", errorData);
       return {
         success: false,
         message: errorData,

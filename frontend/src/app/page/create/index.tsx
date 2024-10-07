@@ -1,20 +1,23 @@
 import { useState } from "react";
 import { createReflection } from "../../../client/reflection";
+import { useAuth } from "../../../context/AuthContext";
 
 export const CreateReflectionPage = () => {
   const [title, setTitle] = useState("");
   const [whatMiss, setWhatMiss] = useState("");
   const [whyMiss, setWhyMiss] = useState("");
   const [preventMiss, setPreventMiss] = useState("");
+  const { userId } = useAuth();
 
   const handleSubmit = async () => {
     const contents = {
-      id: null,
+      id: undefined,
       title: title,
+      userId: userId,
       whatMiss: whatMiss,
       whyMiss: whyMiss,
       preventMiss: preventMiss,
-      createdAt: null,
+      createdAt: undefined,
     };
     const result = await createReflection(contents);
     if (result.success) {

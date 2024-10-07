@@ -44,9 +44,18 @@ export const getReflectionController = (
 export const createReflectionController = (req: Request, res: Response) => {
   console.log("controllers", req.body);
   const reflectionContent = req.body;
+  const convertedReflectionContent = {
+    id: undefined,
+    user_id: reflectionContent.userId,
+    title: reflectionContent.title,
+    what_miss: reflectionContent.whatMiss,
+    why_miss: reflectionContent.whyMiss,
+    prevent_miss: reflectionContent.preventMiss,
+    created_at: undefined,
+  };
 
-  if (reflectionContent) {
-    createReflection(reflectionContent)
+  if (convertedReflectionContent) {
+    createReflection(convertedReflectionContent)
       .then((result) => {
         res.send(result);
       })
