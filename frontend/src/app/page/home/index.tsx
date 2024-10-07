@@ -5,13 +5,19 @@ import { useAuth } from "../../../context/AuthContext";
 import { fetchReflectionContents } from "../../../client/reflection";
 import { useState, useEffect } from "react";
 import type { Reflection } from "../../../types/reflection";
+import { useNavigate } from "react-router-dom";
 
 export const HomePage = () => {
   const { userId } = useAuth();
-  console.log("userId", userId);
+  const navigate = useNavigate();
+
   const [reflections, setReflections] = useState<Reflection[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const navCreatePage = () => {
+    navigate("/create");
+  };
 
   const fetchTitles = async (userId: string) => {
     try {
@@ -40,6 +46,7 @@ export const HomePage = () => {
   return (
     <div>
       <h1>ホームページ</h1>
+      <p onClick={navCreatePage}>反省する</p>
       <h2>反省タイトル</h2>
       <ul>
         {reflections.length > 0 ? (
