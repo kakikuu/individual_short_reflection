@@ -2,16 +2,9 @@
 // ルーティングがhomeだけだと、URLを入力しただけでこのページにアクセスできてしまう
 // 内容を見られたくないから、ログインしているかしていないかの情報を内部で管理したい
 import { useAuth } from "../../../context/AuthContext";
-import { fetchReflectionTitle } from "../../../client/reflection";
+import { fetchReflectionContents } from "../../../client/reflection";
 import { useState, useEffect } from "react";
-
-interface Reflection {
-  title: string;
-  whatMiss: string;
-  whyMiss: string;
-  preventMiss: string;
-  createdAt: string;
-}
+import type { Reflection } from "../../../types/reflection";
 
 export const HomePage = () => {
   const { userId } = useAuth();
@@ -22,7 +15,7 @@ export const HomePage = () => {
 
   const fetchTitles = async (userId: string) => {
     try {
-      const result = await fetchReflectionTitle(userId);
+      const result = await fetchReflectionContents(userId);
       console.log("result3", result?.data);
       setReflections(result?.data || []);
     } catch (err) {
@@ -54,6 +47,7 @@ export const HomePage = () => {
             <li key={index}>{reflection.title}</li>
           ))
         ) : (
+          // ログインやサインアップとは違って、反省がないということはエラーではなくて、事実だから、BE側でエラーを返すよりはFEで処理するほうが良いと考えた
           <li>反省タイトルがありません</li>
         )}
       </ul>

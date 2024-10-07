@@ -3,6 +3,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { LoginPage } from "./app/page/login";
 import { SignupPage } from "./app/page/signup";
 import { HomePage } from "./app/page/home";
+import { CreateReflectionPage } from "./app/page/create";
 import "./App.css";
 import { AuthProvider } from "./context/AuthContext";
 
@@ -19,6 +20,10 @@ function App() {
     {
       path: "/home",
       element: <HomePage />,
+    },
+    {
+      path: "/create",
+      element: <CreateReflectionPage />,
     },
   ]);
   return (

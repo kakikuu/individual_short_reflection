@@ -21,9 +21,11 @@ export const getAllReflection = async (
     .select("title")
     .eq("user_id", userId)
     .select();
-
   if (error) {
     throw error;
+  }
+  if (data === null) {
+    return [];
   }
   return data;
 };
@@ -37,24 +39,22 @@ export const getReflectionByReflectionId = async (
     .from("memos")
     .select("*")
     .eq("id", reflectionId)
-    .eq("user_id", "ef09b2be-829d-4131-b12a-c9df75955da7");
+    .eq("user_id", userId);
   if (error) {
     throw error;
   }
   return data;
 };
 
-// insertする関数
-// 一つずつの反省をDBに挿入する関数
 export const createReflection = async (
   reflection: inputReflection
 ): Promise<getReflections[] | null> => {
   console.log("reflection", reflection);
   const { data, error } = await supabase
     .from("memos")
-    .insert([reflection])
-    .select();
-  console.log(data);
+    .insert(reflection)
+    .select("*");
+  console.log(data, "data");
   if (error) {
     throw error;
   }
