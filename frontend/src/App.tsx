@@ -25,6 +25,9 @@ function App() {
       path: "/create",
       element: <CreateReflectionPage />,
     },
+    {
+      path: "/view/:reflection_id",
+    },
   ]);
   return (
     <AuthProvider>

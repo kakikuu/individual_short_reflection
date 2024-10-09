@@ -63,3 +63,39 @@ export const createReflection = async (contents: Reflection) => {
     };
   }
 };
+
+export const fetchAReflection = async (
+  userId: string,
+  reflectionId: string
+) => {
+  try {
+    const response = await fetch(
+      `http://localhost:3000/${userId}/reflection/${reflectionId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (!response.ok) {
+      const errorData = await response.text();
+      return {
+        success: false,
+        message: errorData,
+      };
+    }
+
+    const result = await response.json();
+    console.log("result", result);
+    return {
+      success: true,
+      data: result,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.message || "ネットワークエラーです",
+    };
+  }
+};
