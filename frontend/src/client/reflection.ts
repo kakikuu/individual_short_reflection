@@ -66,7 +66,7 @@ export const createReflection = async (contents: Reflection) => {
 
 export const fetchAReflection = async (
   userId: string,
-  reflectionId: string
+  reflectionId: number
 ) => {
   try {
     const response = await fetch(
