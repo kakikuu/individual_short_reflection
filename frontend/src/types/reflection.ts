@@ -1,5 +1,5 @@
 export interface Reflection {
-  id: string | undefined;
+  id: number | undefined;
   userId: string | null;
   title: string;
   whatMiss: string;
