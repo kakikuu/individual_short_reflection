@@ -39,7 +39,9 @@ export const getReflectionByReflectionId = async (
     .from("memos")
     .select("*")
     .eq("id", reflectionId)
-    .eq("user_id", userId);
+    .eq("user_id", userId)
+    .select();
+  console.log("data", data);
   if (error) {
     throw error;
   }

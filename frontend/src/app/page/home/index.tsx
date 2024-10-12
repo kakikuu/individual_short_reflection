@@ -19,10 +19,13 @@ export const HomePage = () => {
     navigate("/create");
   };
 
+  const navReflection = (reflectionId: number) => () => {
+    navigate(`/view/${reflectionId}`);
+  };
+
   const fetchTitles = async (userId: string) => {
     try {
       const result = await fetchReflectionContents(userId);
-      console.log("result3", result?.data);
       setReflections(result?.data || []);
     } catch (err) {
       setError("データの取得に失敗しました");
@@ -50,11 +53,14 @@ export const HomePage = () => {
       <h2>反省タイトル</h2>
       <ul>
         {reflections.length > 0 ? (
-          reflections.map((reflection, index) => (
-            <li key={index}>{reflection.title}</li>
-          ))
+          reflections.map((reflection, index) =>
+            reflection.id ? (
+              <li key={index} onClick={navReflection(reflection.id)}>
+                {reflection.title}
+              </li>
+            ) : null
+          )
         ) : (
-          // ログインやサインアップとは違って、反省がないということはエラーではなくて、事実だから、BE側でエラーを返すよりはFEで処理するほうが良いと考えた
           <li>反省タイトルがありません</li>
         )}
       </ul>

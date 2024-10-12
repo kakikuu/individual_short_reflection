@@ -4,6 +4,7 @@ import { LoginPage } from "./app/page/login";
 import { SignupPage } from "./app/page/signup";
 import { HomePage } from "./app/page/home";
 import { CreateReflectionPage } from "./app/page/create";
+import { ViewReflectionPage } from "./app/page/view";
 import "./App.css";
 import { AuthProvider } from "./context/AuthContext";
 
@@ -24,6 +25,10 @@ function App() {
     {
       path: "/create",
       element: <CreateReflectionPage />,
+    },
+    {
+      path: "/view/:reflection_id",
+      element: <ViewReflectionPage />,
     },
   ]);
   return (
