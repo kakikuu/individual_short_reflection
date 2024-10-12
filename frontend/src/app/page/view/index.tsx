@@ -3,17 +3,23 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { fetchAReflection } from "../../../client/reflection";
 import type { Reflection } from "../../../types/reflection";
 
 export const ViewReflectionPage = () => {
+  const navigate = useNavigate();
   const [reflection, setReflection] = useState<Reflection | undefined>(
     undefined
   );
+
   const { reflection_id } = useParams();
   const reflection_id_num = Number(reflection_id);
-
   const { userId } = useAuth();
+
+  const navHome = () => {
+    navigate("/home");
+  };
 
   const fetchReflection = async (userId: string, reflection_id: number) => {
     if (!reflection_id || !userId) return;
@@ -29,14 +35,13 @@ export const ViewReflectionPage = () => {
   };
 
   useEffect(() => {
-    if (!reflection_id_num || !userId) {
-      return;
-    }
+    if (!reflection_id_num || !userId) return;
     fetchReflection(userId, reflection_id_num);
   }, [userId, reflection_id_num]);
 
   return (
     <div>
+      <button onClick={navHome}>ホームに戻る</button>
       <h1>View Reflection</h1>
       {reflection && (
         <div>
