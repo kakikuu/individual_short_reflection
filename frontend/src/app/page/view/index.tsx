@@ -12,7 +12,6 @@ export const ViewReflectionPage = () => {
   );
   const { reflection_id } = useParams();
   const reflection_id_num = Number(reflection_id);
-  console.log("reflection_id", reflection_id_num);
 
   const { userId } = useAuth();
 
@@ -31,10 +30,8 @@ export const ViewReflectionPage = () => {
 
   useEffect(() => {
     if (!reflection_id_num || !userId) {
-      console.log("ねえぜ");
       return;
     }
-    console.log("userId", userId);
     fetchReflection(userId, reflection_id_num);
   }, [userId, reflection_id_num]);
 

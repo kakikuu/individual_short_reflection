@@ -26,7 +26,6 @@ export const HomePage = () => {
   const fetchTitles = async (userId: string) => {
     try {
       const result = await fetchReflectionContents(userId);
-      console.log("result3", result?.data);
       setReflections(result?.data || []);
     } catch (err) {
       setError("データの取得に失敗しました");

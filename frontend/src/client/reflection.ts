@@ -68,7 +68,6 @@ export const fetchAReflection = async (
   userId: string,
   reflectionId: number
 ) => {
-  console.log("userId", userId);
   try {
     const response = await fetch(
       `http://localhost:3000/user/${userId}/reflection/${reflectionId}`,
@@ -98,7 +97,6 @@ export const fetchAReflection = async (
       preventMiss: result[0].prevent_miss,
       createdAt: result[0].created_at,
     };
-    console.log("convertResult", convertResult);
     return {
       success: true,
       data: convertResult,
