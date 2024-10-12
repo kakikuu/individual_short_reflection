@@ -1,15 +1,22 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { createReflection } from "../../../client/reflection";
 import { useAuth } from "../../../context/AuthContext";
 
 export const CreateReflectionPage = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [whatMiss, setWhatMiss] = useState("");
   const [whyMiss, setWhyMiss] = useState("");
   const [preventMiss, setPreventMiss] = useState("");
   const { userId } = useAuth();
 
-  const handleSubmit = async () => {
+  const navHome = () => {
+    navigate("/home");
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
     const contents = {
       id: undefined,
       title: title,
@@ -20,8 +27,10 @@ export const CreateReflectionPage = () => {
       createdAt: undefined,
     };
     const result = await createReflection(contents);
+    console.log(result);
     if (result.success) {
       console.log("成功");
+      navigate("/home");
     } else {
       console.log("失敗");
     }
@@ -29,8 +38,9 @@ export const CreateReflectionPage = () => {
 
   return (
     <>
+      <button onClick={navHome}>ホームに戻る</button>
       <div>反省作成フォーム</div>
-      <form action="">
+      <form>
         <div>
           <p>タイトル</p>
           <input type="text" onChange={(e) => setTitle(e.target.value)} />
