@@ -68,9 +68,10 @@ export const fetchAReflection = async (
   userId: string,
   reflectionId: number
 ) => {
+  console.log("userId", userId);
   try {
     const response = await fetch(
-      `http://localhost:3000/${userId}/reflection/${reflectionId}`,
+      `http://localhost:3000/user/${userId}/reflection/${reflectionId}`,
       {
         method: "GET",
         headers: {
@@ -80,6 +81,7 @@ export const fetchAReflection = async (
     );
     if (!response.ok) {
       const errorData = await response.text();
+      console.log("errorData", errorData);
       return {
         success: false,
         message: errorData,
@@ -87,10 +89,19 @@ export const fetchAReflection = async (
     }
 
     const result = await response.json();
-    console.log("result", result);
+    const convertResult: Reflection = {
+      id: result[0].id,
+      userId: result[0].user_id,
+      title: result[0].title,
+      whatMiss: result[0].what_miss,
+      whyMiss: result[0].why_miss,
+      preventMiss: result[0].prevent_miss,
+      createdAt: result[0].created_at,
+    };
+    console.log("convertResult", convertResult);
     return {
       success: true,
-      data: result,
+      data: convertResult,
     };
   } catch (error: any) {
     return {

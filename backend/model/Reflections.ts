@@ -41,6 +41,7 @@ export const getReflectionByReflectionId = async (
     .eq("id", reflectionId)
     .eq("user_id", userId)
     .select();
+  console.log("data", data);
   if (error) {
     throw error;
   }

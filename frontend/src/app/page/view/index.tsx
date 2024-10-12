@@ -7,15 +7,20 @@ import { fetchAReflection } from "../../../client/reflection";
 import type { Reflection } from "../../../types/reflection";
 
 export const ViewReflectionPage = () => {
-  const [reflection, setReflection] = useState([] as Reflection[]);
-  const { reflection_id_string } = useParams();
-  const reflection_id = Number(reflection_id_string);
+  const [reflection, setReflection] = useState<Reflection | undefined>(
+    undefined
+  );
+  const { reflection_id } = useParams();
+  const reflection_id_num = Number(reflection_id);
+  console.log("reflection_id", reflection_id_num);
 
   const { userId } = useAuth();
 
   const fetchReflection = async (userId: string, reflection_id: number) => {
     if (!reflection_id || !userId) return;
+
     const result = await fetchAReflection(userId, reflection_id);
+
     if (!result.success) {
       console.log("エラー");
       return;
@@ -25,23 +30,25 @@ export const ViewReflectionPage = () => {
   };
 
   useEffect(() => {
-    if (!reflection_id || !userId) return;
-    fetchReflection(userId, reflection_id);
-  }, [userId, reflection_id]);
+    if (!reflection_id_num || !userId) {
+      console.log("ねえぜ");
+      return;
+    }
+    console.log("userId", userId);
+    fetchReflection(userId, reflection_id_num);
+  }, [userId, reflection_id_num]);
 
   return (
     <div>
       <h1>View Reflection</h1>
       {reflection && (
         <div>
-          {reflection.map((reflection, index) => (
-            <div key={index}>
-              <h2>{reflection.title}</h2>
-              <p>{reflection.whatMiss}</p>
-              <p>{reflection.whyMiss}</p>
-              <p>{reflection.preventMiss}</p>
-            </div>
-          ))}
+          <div key={reflection.id}>
+            <h2>{reflection.title}</h2>
+            <p>{reflection.whatMiss}</p>
+            <p>{reflection.whyMiss}</p>
+            <p>{reflection.preventMiss}</p>
+          </div>
         </div>
       )}
     </div>

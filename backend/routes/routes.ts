@@ -49,9 +49,9 @@ app.post("/reflection", (req, res) => {
 });
 
 // TODO:userIdの渡し方がjsonかクエリパラメータかは統一するべきかを検討する
-app.get("/:user_id/reflection/:reflection_id", (req, res) => {
-  // 各反省を一つずつ取得する
+app.get("/user/:user_id/reflection/:reflection_id", (req, res) => {
   console.log("get /が呼ばれました");
+  console.log("req.params", req.params);
   const userId = req.params.user_id;
   const reflectionId = req.params.reflection_id;
   getReflectionController(res, userId, reflectionId);
