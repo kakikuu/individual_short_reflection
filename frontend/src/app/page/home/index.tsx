@@ -32,9 +32,10 @@ export const HomePage = () => {
   };
 
   useEffect(() => {
-    if (!userId) return;
-    fetchTitles(userId);
-  }, [userId]);
+    if (!userId) {
+      navigate("/"); // ログインページにリダイレクト（例: "/login"）
+    }
+  }, [userId, navigate]);
 
   if (loading) {
     return <div>ローディング中</div>;

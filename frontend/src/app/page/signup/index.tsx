@@ -29,21 +29,38 @@ export const SignupPage = () => {
     }
   };
   return (
-    <>
-      <h1>サインアップ</h1>
-      {errorMessage && <p>すでに存在するusernameです。</p>}
-      <form action="">
-        {}
-        <input type="text" placeholder="username" onChange={changeUsername} />
-        <input
-          type="password"
-          placeholder="password"
-          onChange={changePassword}
-        />
-        <button type="submit" onClick={handleSubmit}>
-          サインアップ
-        </button>
-      </form>
-    </>
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <h1 className="text-2xl font-bold mb-6 text-center">サインアップ</h1>
+
+        {errorMessage && (
+          <p className="text-red-500 mb-4 text-center">
+            すでに存在するusernameです。
+          </p>
+        )}
+
+        <form action="" className="space-y-4">
+          <input
+            type="text"
+            placeholder="username"
+            onChange={changeUsername}
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-mainYellow"
+          />
+          <input
+            type="password"
+            placeholder="password"
+            onChange={changePassword}
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-mainYellow"
+          />
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            className="w-full bg-mainYellow text-white py-2 rounded-md hover:bg-yellow-500 transition-colors duration-200"
+          >
+            サインアップ
+          </button>
+        </form>
+      </div>
+    </div>
   );
 };
