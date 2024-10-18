@@ -11,10 +11,11 @@ export const Header = () => {
   };
 
   return (
-    <div className="bg-mainYellow text-white">
-      <h1>屍を越えてけ</h1>
-      <div>
+    <div className="bg-mainYellow text-white py-4 px-8 flex justify-between items-center">
+      <h1 className="text-lg font-bold">屍を越えてけ</h1>
+      <div className="flex space-x-4">
         <p
+          className="cursor-pointer underline"
           onClick={(e) => {
             navHome();
           }}
@@ -22,6 +23,7 @@ export const Header = () => {
           越えてきた屍のすべて
         </p>
         <p
+          className="cursor-pointer underline"
           onClick={(e) => {
             navCreatePage();
           }}

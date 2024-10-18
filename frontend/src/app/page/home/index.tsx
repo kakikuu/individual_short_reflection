@@ -15,11 +15,8 @@ export const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const navCreatePage = () => {
-    navigate("/create");
-  };
-
   const navReflection = (reflectionId: number) => () => {
+    console.log("reflectionId", reflectionId);
     navigate(`/view/${reflectionId}`);
   };
 
@@ -47,23 +44,31 @@ export const HomePage = () => {
   }
 
   return (
-    <div>
-      <h1>ホームページ</h1>
-      <p onClick={navCreatePage}>反省する</p>
-      <h2>反省タイトル</h2>
-      <ul>
+    <div className="mt-8 mx-auto max-w-5xl">
+      <h1 className="text-2xl font-bold mb-4">越えてきた屍のすべて</h1>
+      <div className="grid grid-cols-3 gap-6">
         {reflections.length > 0 ? (
-          reflections.map((reflection, index) =>
-            reflection.id ? (
-              <li key={index} onClick={navReflection(reflection.id)}>
-                {reflection.title}
-              </li>
-            ) : null
-          )
+          reflections.map((reflection, index) => (
+            <div
+              key={index}
+              className="bg-gray-200 p-8 rounded-md shadow-md text-center cursor-pointer"
+              onClick={(e) => {
+                e.preventDefault();
+                if (reflection.id) {
+                  console.log("reflection.id", reflection.id);
+                  navReflection(reflection.id)();
+                }
+              }}
+            >
+              <h2 className="font-bold text-lg">{reflection.title}</h2>
+            </div>
+          ))
         ) : (
-          <li>反省タイトルがありません</li>
+          <div className="col-span-3 text-center text-gray-500">
+            反省タイトルがありません
+          </div>
         )}
-      </ul>
+      </div>
     </div>
   );
 };
