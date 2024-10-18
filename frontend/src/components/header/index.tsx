@@ -11,7 +11,7 @@ export const Header = () => {
   };
 
   return (
-    <div>
+    <div className="bg-mainYellow text-white">
       <h1>屍を越えてけ</h1>
       <div>
         <p
