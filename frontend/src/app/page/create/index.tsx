@@ -11,10 +11,6 @@ export const CreateReflectionPage = () => {
   const [preventMiss, setPreventMiss] = useState("");
   const { userId } = useAuth();
 
-  const navHome = () => {
-    navigate("/home");
-  };
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const contents = {
@@ -38,29 +34,55 @@ export const CreateReflectionPage = () => {
 
   return (
     <>
-      <button onClick={navHome}>ホームに戻る</button>
-      <div>反省作成フォーム</div>
-      <form>
-        <div>
-          <p>タイトル</p>
-          <input type="text" onChange={(e) => setTitle(e.target.value)} />
-        </div>
-        <div>
-          <p>何をミスしたか</p>
-          <input type="text" onChange={(e) => setWhatMiss(e.target.value)} />
-        </div>
-        <div>
-          <p>なぜミスしたか</p>
-          <input type="text" onChange={(e) => setWhyMiss(e.target.value)} />
-        </div>
-        <div>
-          <p>どうすればミスを防げるか</p>
-          <input type="text" onChange={(e) => setPreventMiss(e.target.value)} />
-        </div>
-        <button type="submit" onClick={handleSubmit}>
-          作成
-        </button>
-      </form>
+      <div className="mt-8 mx-auto max-w-lg">
+        <h1 className="text-2xl font-bold mb-8">屍を越えてけ</h1>
+
+        <form className="space-y-8">
+          <div>
+            <p className="font-bold">止めたい思考</p>
+            <input
+              type="text"
+              className="border border-gray-300 p-2 w-full"
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <p className="font-bold">何に失敗したのか</p>
+            <input
+              type="text"
+              className="border border-gray-300 p-2 w-full"
+              onChange={(e) => setWhatMiss(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <p className="font-bold">なぜ失敗したのか</p>
+            <input
+              type="text"
+              className="border border-gray-300 p-2 w-full"
+              onChange={(e) => setWhyMiss(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <p className="font-bold">どうやって失敗を防ぐか</p>
+            <input
+              type="text"
+              className="border border-gray-300 p-2 w-full"
+              onChange={(e) => setPreventMiss(e.target.value)}
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="bg-mainYellow text-white py-2 px-4 rounded"
+            onClick={handleSubmit}
+          >
+            屍にする
+          </button>
+        </form>
+      </div>
     </>
   );
 };

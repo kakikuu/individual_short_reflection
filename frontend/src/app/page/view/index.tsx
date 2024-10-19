@@ -40,16 +40,34 @@ export const ViewReflectionPage = () => {
   }, [userId, reflection_id_num]);
 
   return (
-    <div>
-      <button onClick={navHome}>ホームに戻る</button>
-      <h1>View Reflection</h1>
+    <div className="mt-8 mx-auto max-w-4xl">
+      <h1 className="text-2xl font-bold mb-8">越えてきた屍 - 詳細</h1>
+
       {reflection && (
         <div>
-          <div key={reflection.id}>
-            <h2>{reflection.title}</h2>
-            <p>{reflection.whatMiss}</p>
-            <p>{reflection.whyMiss}</p>
-            <p>{reflection.preventMiss}</p>
+          <div className="flex justify-between items-start mb-8">
+            <div>
+              <p className="font-bold">やめたかった思考</p>
+              <h2 className="font-bold text-xl">{reflection.title}</h2>
+            </div>
+            <div className="text-right">
+              <p className="font-bold">越えた日: {reflection.createdAt}</p>
+            </div>
+          </div>
+
+          <div className="mb-8">
+            <p className="font-bold">失敗したこと</p>
+            <p className="bg-gray-100 p-4">{reflection.whatMiss}</p>
+          </div>
+
+          <div className="mb-8">
+            <p className="font-bold">失敗した理由</p>
+            <p className="bg-gray-100 p-4">{reflection.whyMiss}</p>
+          </div>
+
+          <div className="mb-8">
+            <p className="font-bold">次にどうするんだっけ？</p>
+            <p className="bg-gray-100 p-4">{reflection.preventMiss}</p>
           </div>
         </div>
       )}
