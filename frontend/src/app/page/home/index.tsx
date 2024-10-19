@@ -33,7 +33,9 @@ export const HomePage = () => {
 
   useEffect(() => {
     if (!userId) {
-      navigate("/"); // ログインページにリダイレクト（例: "/login"）
+      navigate("/"); // ログインページにリダイレクト（例: "/"）
+    } else {
+      fetchTitles(userId); // データ取得
     }
   }, [userId, navigate]);
 
