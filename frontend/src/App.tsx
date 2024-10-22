@@ -1,25 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { LoginPage } from "./app/page/login";
+import { SignupPage } from "./app/page/signup";
+import { HomePage } from "./app/page/home";
+import { CreateReflectionPage } from "./app/page/create";
+import { ViewReflectionPage } from "./app/page/view";
+import "./App.css";
+import { AuthProvider } from "./context/AuthContext";
+import { Header } from "./components/header";
+import { Outlet } from "react-router-dom";
+
+const Layout = () => {
+  return (
+    <div>
+      <Header />
+      <Outlet />
+    </div>
+  );
+};
 
 function App() {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />, // 共通レイアウトを使用
+      children: [
+        { path: "/", element: <LoginPage /> },
+        { path: "/signup", element: <SignupPage /> },
+        { path: "/home", element: <HomePage /> },
+        { path: "/create", element: <CreateReflectionPage /> },
+        { path: "/view/:reflection_id", element: <ViewReflectionPage /> },
+      ],
+    },
+  ]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   );
 }
 
