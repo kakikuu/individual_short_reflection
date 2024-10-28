@@ -17,10 +17,6 @@ export const ViewReflectionPage = () => {
   const reflection_id_num = Number(reflection_id);
   const { userId } = useAuth();
 
-  const navHome = () => {
-    navigate("/home");
-  };
-
   const fetchReflection = async (userId: string, reflection_id: number) => {
     if (!reflection_id || !userId) return;
 
