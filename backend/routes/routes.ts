@@ -8,6 +8,7 @@ import {
   signupController,
   loginController,
 } from "../controllers/UserControllers";
+import { jwtHelper } from "../helper/jwtHelper";
 import cors from "cors";
 import { Request, Response } from "express";
 
@@ -65,6 +66,24 @@ app.post("/reflection/create", (req: Request, res: Response) => {
   console.log("postが呼ばれました");
   console.log("routeのbody", req.body);
   createReflectionController(req, res);
+});
+
+app.get("/tokenVerification", (req: Request, res: Response, next) => {
+  let token = "";
+  if (req.cookies.jwtToken) {
+    token = req.cookies.jwtToken;
+  } else {
+    return res.status(200).json({ isAuthenticated: false });
+  }
+  const decode = jwtHelper.verifyToken(token);
+  if (decode) {
+    const token = jwtHelper.createToken();
+    res.cookie("jwtToken", token, {
+      httpOnly: true,
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+    });
+    return res.status(200).json({ isAuthenticated: true });
+  }
 });
 
 app.listen(PORT, () => {
