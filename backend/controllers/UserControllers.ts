@@ -47,12 +47,14 @@ export const loginController = async (
           return;
         }
         const jwtToken = jwtHelper.createToken();
-        res..cookie("jwtToken", jwtToken, {
-          //webサーバーのみがアクセス可能
-          httpOnly: true,
-          //cookieの有効期限は2日間に設定
-          expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 2),
-        }).send(result);
+        res
+          .cookie("jwtToken", jwtToken, {
+            //webサーバーのみがアクセス可能
+            httpOnly: true,
+            //cookieの有効期限は2日間に設定
+            expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 2),
+          })
+          .send(result);
       })
       .catch((error) => {
         res.send(error);
