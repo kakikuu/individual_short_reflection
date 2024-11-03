@@ -86,10 +86,7 @@ app.get("/tokenVerification", (req: Request, res: Response, next) => {
   }
   const decode = jwtHelper.verifyToken(token);
   if (decode) {
-    const token = jwtHelper.createToken({
-      id: decode.id,
-      username: decode.username,
-    });
+    const token = jwtHelper.createToken();
     res.cookie("jwtToken", token, {
       httpOnly: true,
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),

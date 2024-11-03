@@ -27,7 +27,7 @@ export const LoginPage = () => {
     const result = await fetchUserData({ username, password });
     if (result.success) {
       login(result.data.id);
-      navigate("/home");
+      navigate("/create");
     } else {
       setErrorMessage(result.message);
     }
