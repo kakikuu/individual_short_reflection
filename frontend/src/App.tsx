@@ -9,6 +9,7 @@ import "./App.css";
 import { AuthProvider } from "./context/AuthContext";
 import { Header } from "./components/header";
 import { Outlet } from "react-router-dom";
+import { PrivateRoute, GuestRoute } from "./AuthRouter";
 
 const Layout = () => {
   return (
@@ -25,11 +26,46 @@ function App() {
       path: "/",
       element: <Layout />, // 共通レイアウトを使用
       children: [
-        { path: "/", element: <LoginPage /> },
-        { path: "/signup", element: <SignupPage /> },
-        { path: "/home", element: <HomePage /> },
-        { path: "/create", element: <CreateReflectionPage /> },
-        { path: "/view/:reflection_id", element: <ViewReflectionPage /> },
+        {
+          path: "/",
+          element: (
+            <GuestRoute>
+              <LoginPage />
+            </GuestRoute>
+          ),
+        },
+        {
+          path: "/signup",
+          element: (
+            <GuestRoute>
+              <SignupPage />
+            </GuestRoute>
+          ),
+        },
+        {
+          path: "/home",
+          element: (
+            <PrivateRoute>
+              <HomePage />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "/create",
+          element: (
+            <PrivateRoute>
+              <CreateReflectionPage />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "/view/:reflection_id",
+          element: (
+            <PrivateRoute>
+              <ViewReflectionPage />
+            </PrivateRoute>
+          ),
+        },
       ],
     },
   ]);
