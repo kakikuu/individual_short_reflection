@@ -15,7 +15,7 @@ const supabase = createClient(
 
 // getする関数
 export const Signup = async (userData: inputUser): Promise<checkUserName> => {
-  // data: existingUserはエイリアスの書き方
+  // "data: existingUser" はエイリアスの書き方
   const { data: existingUser, error: checkError } = await supabase
     .from("users")
     .select("*")
