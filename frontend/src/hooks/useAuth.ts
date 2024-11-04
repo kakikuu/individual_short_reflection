@@ -7,9 +7,10 @@ export const useAuth = () => {
     isAuthenticated: boolean;
   }>({ checked: false, isAuthenticated: false });
   useEffect(() => {
-    const handleCheck = async () => {
+    const verifyToken = async () => {
       try {
         const response = await checkJwt();
+        console.log("response", response);
         setCheck({
           checked: true,
           isAuthenticated: response.isAuthenticated,
@@ -18,7 +19,7 @@ export const useAuth = () => {
         setCheck({ checked: true, isAuthenticated: false });
       }
     };
-    handleCheck();
+    verifyToken();
   }, []);
   return check;
 };
