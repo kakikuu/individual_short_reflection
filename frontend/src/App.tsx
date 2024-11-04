@@ -6,10 +6,9 @@ import { HomePage } from "./app/page/home";
 import { CreateReflectionPage } from "./app/page/create";
 import { ViewReflectionPage } from "./app/page/view";
 import "./App.css";
-import { AuthProvider } from "./context/AuthContext";
 import { Header } from "./components/header";
 import { Outlet } from "react-router-dom";
-import { PrivateRoute, GuestRoute } from "./AuthRouter";
+import { PrivateRoute } from "./AuthRouter";
 
 const Layout = () => {
   return (
@@ -28,19 +27,11 @@ function App() {
       children: [
         {
           path: "/",
-          element: (
-            <GuestRoute>
-              <LoginPage />
-            </GuestRoute>
-          ),
+          element: <LoginPage />,
         },
         {
           path: "/signup",
-          element: (
-            <GuestRoute>
-              <SignupPage />
-            </GuestRoute>
-          ),
+          element: <SignupPage />,
         },
         {
           path: "/home",
@@ -69,11 +60,7 @@ function App() {
       ],
     },
   ]);
-  return (
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
