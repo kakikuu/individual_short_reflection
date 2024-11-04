@@ -27,6 +27,7 @@ export const signupController = async (
             .status(201)
             .cookie("jwtToken", jwtToken, {
               httpOnly: true,
+              sameSite: "lax",
               expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
             })
             .send(result.data);

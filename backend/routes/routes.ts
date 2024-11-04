@@ -17,24 +17,22 @@ import { authenticateToken } from "../middleware/authenticateToken";
 const app = express();
 const PORT = 3000;
 
-app.use(cors());
-
 // 必要に応じて詳細なオプションを追加
-app.use(
-  cors({
-    origin: "http://localhost:3001",
-    methods: "GET,POST,PUT,DELETE", // 許可するHTTPメソッド
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: [
+    "http://localhost:3001",
+    "https://individual-short-reflection-j0y4l8233-kakikuus-projects.vercel.app",
+  ],
+  methods: "GET,POST,PUT,DELETE",
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+};
 
-app.options("*", cors());
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 app.use(express.json());
 app.use(cookieParser());
-
-// URLエンコードされたデータのパース
 app.use(express.urlencoded({ extended: true }));
 
 // routerではパスから受け取るだけ
@@ -48,7 +46,7 @@ app.post("/signup", (req: Request, res: Response) => {
   signupController(req, res);
 });
 
-app.post("/reflection", authenticateToken, (req: Request, res: Response) => {
+app.get("/reflection", authenticateToken, (req: Request, res: Response) => {
   console.log("all reflectionのgetが呼ばれました");
   getAllReflectionsController(req, res);
 });
