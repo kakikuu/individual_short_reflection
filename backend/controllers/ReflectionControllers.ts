@@ -8,7 +8,7 @@ import {
 // 入力に対して、DBの結果を返す
 export const getAllReflectionsController = (req: Request, res: Response) => {
   console.log("reflectionsのController");
-  const userId = req.body.user_id;
+  const userId = (req.user as any).user_id;
   console.log("userId", userId);
   if (userId) {
     getAllReflection(userId as string)
@@ -24,10 +24,10 @@ export const getAllReflectionsController = (req: Request, res: Response) => {
 
 export const getReflectionController = (
   res: Response,
-  userId: string,
   reflectionId: string
 ) => {
   console.log("Controllerが呼ばれました");
+  const userId = (res.req as any).user.user_id;
   if (reflectionId) {
     getReflectionByReflectionId(userId as string, reflectionId as string)
       .then((result) => {
@@ -44,9 +44,10 @@ export const getReflectionController = (
 export const createReflectionController = (req: Request, res: Response) => {
   console.log("controllers", req.body);
   const reflectionContent = req.body;
+  const userId = (req.user as any).user_id;
   const convertedReflectionContent = {
     id: undefined,
-    user_id: reflectionContent.userId,
+    user_id: userId,
     title: reflectionContent.title,
     what_miss: reflectionContent.whatMiss,
     why_miss: reflectionContent.whyMiss,
