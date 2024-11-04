@@ -15,7 +15,7 @@ export const Header = () => {
       <h1 className="text-lg font-bold">屍を越えてけ</h1>
       <div className="flex space-x-4">
         <p
-          className="cursor-pointer underline"
+          className="cursor-pointer"
           onClick={(e) => {
             navHome();
           }}
@@ -23,12 +23,31 @@ export const Header = () => {
           越えてきた屍のすべて
         </p>
         <p
-          className="cursor-pointer underline"
+          className="cursor-pointer"
           onClick={(e) => {
             navCreatePage();
           }}
         >
           屍を越える
+        </p>
+        <p
+          className="cursor-pointer"
+          onClick={(e) => {
+            fetch("http://localhost:3000/logout", {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              credentials: "include",
+            }).then((res) => {
+              console.log(res);
+              if (res.ok) {
+                navigate("/");
+              }
+            });
+          }}
+        >
+          ログアウト
         </p>
       </div>
     </div>
