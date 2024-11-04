@@ -17,8 +17,12 @@ export const signupController = async (
           res.status(401).send("ユーザー名がすでに存在しています");
           return;
         } else {
-          const jwtToken = jwtHelper.createToken();
-          // res.status(201).send(result.data);
+          if (!result.data) {
+            res.status(500).send("ユーザーの作成に失敗しました");
+            return;
+          }
+          const userId = result.data.user_id;
+          const jwtToken = jwtHelper.createToken(userId);
           return res
             .status(201)
             .cookie("jwtToken", jwtToken, {
@@ -46,12 +50,11 @@ export const loginController = async (
           res.status(401).send("ユーザー名またはパスワードが間違っています");
           return;
         }
-        const jwtToken = jwtHelper.createToken();
+        const userId = result.user_id;
+        const jwtToken = jwtHelper.createToken(userId);
         res
           .cookie("jwtToken", jwtToken, {
-            //webサーバーのみがアクセス可能
             httpOnly: true,
-            //cookieの有効期限は2日間に設定
             expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 2),
           })
           .send(result);
