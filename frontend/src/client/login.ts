@@ -11,11 +11,10 @@ export const fetchUserData = async (loginData: LoginData) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        user_name: loginData.username, // フィールド名をバックエンドに合わせる
+        user_name: loginData.username,
         password: loginData.password,
       }),
     });
-    // バックエンド側でなんのエラーが起こったかを判別する場所は1つだけにする
     if (!response.ok) {
       const errorData = await response.text();
       return {

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createReflection } from "../../../client/reflection";
-import { useAuth } from "../../../context/AuthContext";
 
 export const CreateReflectionPage = () => {
   const navigate = useNavigate();
@@ -9,14 +8,12 @@ export const CreateReflectionPage = () => {
   const [whatMiss, setWhatMiss] = useState("");
   const [whyMiss, setWhyMiss] = useState("");
   const [preventMiss, setPreventMiss] = useState("");
-  const { userId } = useAuth();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const contents = {
       id: undefined,
       title: title,
-      userId: userId,
       whatMiss: whatMiss,
       whyMiss: whyMiss,
       preventMiss: preventMiss,

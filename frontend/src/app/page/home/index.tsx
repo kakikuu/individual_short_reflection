@@ -1,14 +1,12 @@
 // TODO:ログイン済みであるかを判定する処理を追加する
 // ルーティングがhomeだけだと、URLを入力しただけでこのページにアクセスできてしまう
 // 内容を見られたくないから、ログインしているかしていないかの情報を内部で管理したい
-import { useAuth } from "../../../context/AuthContext";
 import { fetchReflectionContents } from "../../../client/reflection";
 import { useState, useEffect } from "react";
 import type { Reflection } from "../../../types/reflection";
 import { useNavigate } from "react-router-dom";
 
 export const HomePage = () => {
-  const { userId } = useAuth();
   const navigate = useNavigate();
 
   const [reflections, setReflections] = useState<Reflection[]>([]);
@@ -20,9 +18,9 @@ export const HomePage = () => {
     navigate(`/view/${reflectionId}`);
   };
 
-  const fetchTitles = async (userId: string) => {
+  const fetchTitles = async () => {
     try {
-      const result = await fetchReflectionContents(userId);
+      const result = await fetchReflectionContents();
       setReflections(result?.data || []);
     } catch (err) {
       setError("データの取得に失敗しました");
@@ -32,12 +30,8 @@ export const HomePage = () => {
   };
 
   useEffect(() => {
-    if (!userId) {
-      navigate("/"); // ログインページにリダイレクト（例: "/"）
-    } else {
-      fetchTitles(userId); // データ取得
-    }
-  }, [userId, navigate]);
+    fetchTitles();
+  }, []);
 
   if (loading) {
     return <div>ローディング中</div>;

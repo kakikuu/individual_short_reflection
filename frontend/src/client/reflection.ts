@@ -1,15 +1,14 @@
 import type { Reflection } from "../types/reflection";
 
-export const fetchReflectionContents = async (userId: string) => {
+export const fetchReflectionContents = async () => {
+  console.log("fetchReflectionContents");
   try {
     const response = await fetch(`http://localhost:3000/reflection`, {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        user_id: userId,
-      }),
+      credentials: "include",
     });
     if (!response.ok) {
       const errorData = await response.text();
@@ -40,6 +39,7 @@ export const createReflection = async (contents: Reflection) => {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(contents),
     });
     if (!response.ok) {
@@ -64,18 +64,16 @@ export const createReflection = async (contents: Reflection) => {
   }
 };
 
-export const fetchAReflection = async (
-  userId: string,
-  reflectionId: number
-) => {
+export const fetchAReflection = async (reflectionId: number) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/user/${userId}/reflection/${reflectionId}`,
+      `http://localhost:3000/reflection/${reflectionId}`,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
       }
     );
     if (!response.ok) {
