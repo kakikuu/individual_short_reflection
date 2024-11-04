@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction } from "express";
 import {
   getReflectionController,
   createReflectionController,
@@ -12,6 +12,7 @@ import { jwtHelper } from "../helper/jwtHelper";
 import cors from "cors";
 import { Request, Response } from "express";
 import cookieParser from "cookie-parser";
+import { authenticateToken } from "../middleware/authenticateToken";
 
 const app = express();
 const PORT = 3000;
@@ -30,9 +31,8 @@ app.use(
 
 app.options("*", cors());
 
-app.use(cookieParser());
-// JSON形式のリクエストボディをパースするためのミドルウェア
 app.use(express.json());
+app.use(cookieParser());
 
 // URLエンコードされたデータのパース
 app.use(express.urlencoded({ extended: true }));
@@ -46,14 +46,9 @@ app.post("/login", (req: Request, res: Response) => {
 app.post("/signup", (req: Request, res: Response) => {
   console.log("signupが呼ばれました");
   signupController(req, res);
-  const jwtToken = jwtHelper.createToken();
-  return res.cookie("jwtToken", jwtToken, {
-    httpOnly: true,
-    expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
-  });
 });
 
-app.post("/reflection", (req: Request, res: Response) => {
+app.post("/reflection", authenticateToken, (req: Request, res: Response) => {
   console.log("all reflectionのgetが呼ばれました");
   getAllReflectionsController(req, res);
 });
@@ -61,39 +56,41 @@ app.post("/reflection", (req: Request, res: Response) => {
 // TODO:userIdの渡し方がjsonかクエリパラメータかは統一するべきかを検討する
 app.get(
   "/user/:user_id/reflection/:reflection_id",
+  authenticateToken,
   (req: Request, res: Response) => {
     console.log("get /が呼ばれました");
     console.log("req.params", req.params);
-    const userId = req.params.user_id;
+    // const userId = req.params.user_id;
     const reflectionId = req.params.reflection_id;
-    getReflectionController(res, userId, reflectionId);
+    getReflectionController(res, reflectionId);
   }
 );
 
-app.post("/reflection/create", (req: Request, res: Response) => {
-  console.log("postが呼ばれました");
-  console.log("routeのbody", req.body);
-  createReflectionController(req, res);
-});
-
-app.get("/tokenVerification", (req: Request, res: Response, next) => {
-  let token = "";
-  console.log("req.cookies", req.cookies);
-  if (req.cookies.jwtToken) {
-    token = req.cookies.jwtToken;
-  } else {
-    return res.status(200).json({ isAuthenticated: false });
+app.post(
+  "/reflection/create",
+  authenticateToken,
+  (req: Request, res: Response) => {
+    console.log("postが呼ばれました");
+    console.log("routeのbody", req.body);
+    createReflectionController(req, res);
   }
-  const decode = jwtHelper.verifyToken(token);
-  if (decode) {
-    const token = jwtHelper.createToken();
+);
+
+app.get(
+  "/tokenVerification",
+  authenticateToken,
+  (req: Request, res: Response, next: NextFunction) => {
+    if (!req.user) {
+      return res.status(401).send("You are not authenticated");
+    }
+    const token = jwtHelper.createToken(req.user as string);
     res.cookie("jwtToken", token, {
       httpOnly: true,
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
     });
     return res.status(200).json({ isAuthenticated: true });
   }
-});
+);
 
 app.listen(PORT, () => {
   console.log(`server listen Port ${PORT}`);
