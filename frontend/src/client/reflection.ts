@@ -3,7 +3,7 @@ import type { Reflection } from "../types/reflection";
 export const fetchReflectionContents = async () => {
   console.log("fetchReflectionContents");
   try {
-    const response = await fetch(`http://localhost:3000/reflection`, {
+    const response = await fetch(`https://localhost:3000/reflection`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -34,7 +34,7 @@ export const fetchReflectionContents = async () => {
 
 export const createReflection = async (contents: Reflection) => {
   try {
-    const response = await fetch(`http://localhost:3000/reflection/create`, {
+    const response = await fetch(`https://localhost:3000/reflection/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +67,7 @@ export const createReflection = async (contents: Reflection) => {
 export const fetchAReflection = async (reflectionId: number) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/reflection/${reflectionId}`,
+      `https://localhost:3000/reflection/${reflectionId}`,
       {
         method: "GET",
         headers: {
