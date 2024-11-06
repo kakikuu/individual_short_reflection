@@ -1,7 +1,7 @@
 // 認証情報をフェッチする関数を定義
 export const fetchAuthData = async (loginData: string) => {
   try {
-    const response = await fetch("http://localhost:3000/auth", {
+    const response = await fetch("https://localhost:3000/auth", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,5 +1,5 @@
 export const checkJwt = async () => {
-  const response = await fetch("http://localhost:3000/tokenVerification", {
+  const response = await fetch("https://localhost:3000/tokenVerification", {
     method: "GET",
     credentials: "include", // クッキーを含めるための設定
   });

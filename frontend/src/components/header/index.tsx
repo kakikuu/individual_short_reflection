@@ -33,7 +33,7 @@ export const Header = () => {
         <p
           className="cursor-pointer"
           onClick={(e) => {
-            fetch("http://localhost:3000/logout", {
+            fetch("https://localhost:3000/logout", {
               method: "GET",
               headers: {
                 "Content-Type": "application/json",
