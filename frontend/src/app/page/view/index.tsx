@@ -43,7 +43,7 @@ export const ViewReflectionPage = () => {
         <div>
           <div className="flex justify-between items-start mb-8">
             <div>
-              <p className="font-bold">やめたかった思考</p>
+              <p className="font-bold">頭から離れなかった後悔</p>
               <h2 className="font-bold text-xl">{reflection.title}</h2>
             </div>
             <div className="text-right">
@@ -52,17 +52,17 @@ export const ViewReflectionPage = () => {
           </div>
 
           <div className="mb-8">
-            <p className="font-bold">失敗したこと</p>
+            <p className="font-bold">どんな行動を取ったのか</p>
             <p className="bg-gray-100 p-4">{reflection.whatMiss}</p>
           </div>
 
           <div className="mb-8">
-            <p className="font-bold">失敗した理由</p>
+            <p className="font-bold">その行動の結果どんな気持ちになったのか</p>
             <p className="bg-gray-100 p-4">{reflection.whyMiss}</p>
           </div>
 
           <div className="mb-8">
-            <p className="font-bold">次にどうするんだっけ？</p>
+            <p className="font-bold">どうするのが理想だったのか</p>
             <p className="bg-gray-100 p-4">{reflection.preventMiss}</p>
           </div>
         </div>

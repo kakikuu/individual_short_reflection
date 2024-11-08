@@ -39,7 +39,7 @@ export const CreateReflectionPage = () => {
 
         <form className="space-y-8">
           <div>
-            <p className="font-bold">止めたい思考</p>
+            <p className="font-bold">頭から離れない後悔</p>
             <input
               type="text"
               className="border border-gray-300 p-2 w-full"
@@ -48,7 +48,7 @@ export const CreateReflectionPage = () => {
           </div>
 
           <div>
-            <p className="font-bold">何に失敗したのか</p>
+            <p className="font-bold">どんな行動を取ったのか</p>
             <input
               type="text"
               className="border border-gray-300 p-2 w-full"
@@ -57,7 +57,7 @@ export const CreateReflectionPage = () => {
           </div>
 
           <div>
-            <p className="font-bold">なぜ失敗したのか</p>
+            <p className="font-bold">その行動の結果どんな気持ちになったのか</p>
             <input
               type="text"
               className="border border-gray-300 p-2 w-full"
@@ -66,7 +66,7 @@ export const CreateReflectionPage = () => {
           </div>
 
           <div>
-            <p className="font-bold">どうやって失敗を防ぐか</p>
+            <p className="font-bold">どうするのが理想だったのか</p>
             <input
               type="text"
               className="border border-gray-300 p-2 w-full"
