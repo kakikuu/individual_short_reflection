@@ -6,14 +6,16 @@ type AuthRouterProps = {
 };
 
 export const PrivateRoute = ({ children }: AuthRouterProps) => {
-  const check = useAuth();
-  console.log("PrivateRoute", check);
+  const { checked, isAuthenticated } = useAuth();
+  console.log("PrivateRoute", checked, isAuthenticated);
 
-  if (!check.checked) {
+  if (!checked) {
     return <div>Loading...</div>;
   }
-  if (!check.isAuthenticated) {
-    return <>{children}</>;
+
+  if (!isAuthenticated) {
+    return <Navigate to="/" />; // 認証されていない場合はログインページへリダイレクト
   }
-  return <Navigate to="/home" />;
+
+  return <>{children}</>;
 };

@@ -3,6 +3,7 @@ export const fetchAuthData = async (loginData: string) => {
   try {
     const response = await fetch("https://localhost:3000/auth", {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },

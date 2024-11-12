@@ -10,6 +10,7 @@ export const fetchUserData = async (loginData: LoginData) => {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify({
         user_name: loginData.username,
         password: loginData.password,

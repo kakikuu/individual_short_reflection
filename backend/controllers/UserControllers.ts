@@ -22,12 +22,15 @@ export const signupController = async (
             return;
           }
           const userId = result.data.user_id;
+          console.log("userId", userId);
           const jwtToken = jwtHelper.createToken(userId);
           return res
             .status(201)
             .cookie("jwtToken", jwtToken, {
               httpOnly: true,
-              sameSite: "lax",
+              sameSite: "none",
+              secure: true,
+              path: "/",
               expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
             })
             .send(result.data);
@@ -52,13 +55,18 @@ export const loginController = async (
           return;
         }
         const userId = result.user_id;
+        console.log("userId", userId);
         const jwtToken = jwtHelper.createToken(userId);
         res
           .cookie("jwtToken", jwtToken, {
             httpOnly: true,
+            sameSite: "none",
+            secure: true,
+            path: "/",
             expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 2),
           })
           .send(result);
+        console.log("res", res);
       })
       .catch((error) => {
         res.send(error);

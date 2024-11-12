@@ -8,6 +8,21 @@ import {
 // 入力に対して、DBの結果を返す
 export const getAllReflectionsController = (req: Request, res: Response) => {
   console.log("reflectionsのController");
+  console.log("req.user", req.user);
+  if (req.user && typeof req.user !== "string") {
+    console.log("req.user", req.user);
+    // const userPayload = req.user as CustomJwtPayload;
+
+    // // ネストされた userId を取り出す
+    // const userIdDetails = userPayload.userId.userId; // 最も内側の userId オブジェクト
+
+    // 必要な情報を userId オブジェクトから取得
+    // 例: この例では userId は string 型として扱っています
+    // const innerUserId = userIdDetails.userId;
+
+    // console.log("UserId:", innerUserId);
+  }
+
   const userId = (req.user as any).user_id;
   console.log("userId", userId);
   if (userId) {

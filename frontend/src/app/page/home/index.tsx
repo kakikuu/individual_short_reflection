@@ -30,6 +30,7 @@ export const HomePage = () => {
   };
 
   useEffect(() => {
+    console.log("useEffect");
     fetchTitles();
   }, []);
 

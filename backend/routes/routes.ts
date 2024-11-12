@@ -1,4 +1,6 @@
 import express, { NextFunction } from "express";
+import fs from "fs";
+import https from "https";
 import {
   getReflectionController,
   createReflectionController,
@@ -20,7 +22,7 @@ const PORT = 3000;
 // 必要に応じて詳細なオプションを追加
 const corsOptions = {
   origin: [
-    "http://localhost:3001",
+    "https://localhost:3001",
     "https://individual-short-reflection-j0y4l8233-kakikuus-projects.vercel.app",
   ],
   methods: "GET,POST,PUT,DELETE",
@@ -41,6 +43,12 @@ app.post("/login", (req: Request, res: Response) => {
   loginController(req, res);
 });
 
+app.get("/logout", (req: Request, res: Response) => {
+  console.log("logoutが呼ばれました");
+  res.clearCookie("jwtToken");
+  res.status(200).send("logout");
+});
+
 app.post("/signup", (req: Request, res: Response) => {
   console.log("signupが呼ばれました");
   signupController(req, res);
@@ -51,14 +59,12 @@ app.get("/reflection", authenticateToken, (req: Request, res: Response) => {
   getAllReflectionsController(req, res);
 });
 
-// TODO:userIdの渡し方がjsonかクエリパラメータかは統一するべきかを検討する
 app.get(
-  "/user/:user_id/reflection/:reflection_id",
+  "reflection/:reflection_id",
   authenticateToken,
   (req: Request, res: Response) => {
     console.log("get /が呼ばれました");
     console.log("req.params", req.params);
-    // const userId = req.params.user_id;
     const reflectionId = req.params.reflection_id;
     getReflectionController(res, reflectionId);
   }
@@ -78,7 +84,9 @@ app.get(
   "/tokenVerification",
   authenticateToken,
   (req: Request, res: Response, next: NextFunction) => {
+    console.log("tokenVerificationが呼ばれました");
     if (!req.user) {
+      console.log("req.userがない");
       return res.status(401).send("You are not authenticated");
     }
     const token = jwtHelper.createToken(req.user as string);
@@ -90,6 +98,18 @@ app.get(
   }
 );
 
-app.listen(PORT, () => {
-  console.log(`server listen Port ${PORT}`);
+app.use((req: Request, res: Response, next: NextFunction) => {
+  console.log(`Request origin: ${req.headers.origin}`);
+  next();
+});
+
+const httpsOptions = {
+  key: fs.readFileSync("./server.key"),
+  cert: fs.readFileSync("./server.crt"),
+};
+
+const httpsServer = https.createServer(httpsOptions, app);
+
+httpsServer.listen(PORT, () => {
+  console.log(`HTTPS server running on port ${PORT}`);
 });

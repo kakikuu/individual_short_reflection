@@ -8,8 +8,10 @@ export const authenticateToken = (
   next: NextFunction
 ) => {
   const token = req.cookies.jwtToken;
+  // console.log("req.cookies", req.cookies);
+  console.log("token", token);
   if (!token) {
-    return res.status(401).send("You are not authenticated");
+    return res.status(401).send("ミドルウェア内：You are not authenticated");
   }
   const verified = jwtHelper.verifyToken(token);
   if (!verified) {

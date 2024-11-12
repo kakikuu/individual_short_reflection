@@ -10,6 +10,7 @@ export const insertUserData = async (signupData: SignupData) => {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify({
         user_name: signupData.username,
         password: signupData.password,
